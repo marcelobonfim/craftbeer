@@ -19,7 +19,7 @@ public class BeerService {
 		return (List<Beer>) beerRepository.findAll();
 	}
 
-	public Beer saveBeer(Beer beer) {
+	public Beer addBeer(Beer beer) {
 		return beerRepository.save(beer);
 	}
 

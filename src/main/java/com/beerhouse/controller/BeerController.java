@@ -38,7 +38,7 @@ public class BeerController {
 	
 	@PostMapping
 	public ResponseEntity<Beer> addBeer(@RequestBody Beer beer) throws Exception {
-		Beer beerNew = beerService.saveBeer(beer);
+		Beer beerNew = beerService.addBeer(beer);
 		
 		if (beerNew == null) {
 			return ResponseEntity.notFound().build();
@@ -67,7 +67,7 @@ public class BeerController {
 		
 		Beer changeBeer = beerService.changeBeer(id, beer);
 		
-		if (beer == null) {
+		if (changeBeer == null) {
 			return ResponseEntity.notFound().build();
 		}
 		
@@ -79,7 +79,7 @@ public class BeerController {
 		
 		Beer changeBeer = beerService.changeBeer(id, beer);
 		
-		if (beer == null) {
+		if (changeBeer == null) {
 			return ResponseEntity.notFound().build();
 		}
 		
