@@ -2,6 +2,8 @@ package com.beerhouse.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,8 +45,21 @@ public class BeerService {
 				});
 	}
 
+	public Beer partialChangeBeer(Long id, @Valid Beer partialChangeBeer) {
+		Beer beer = beerRepository.findById(id).orElseThrow(() -> new BeerNotFoundException(id));
+		
+		beer.setName(partialChangeBeer.getName() != null ? partialChangeBeer.getName() : beer.getName());
+		beer.setIngredients(partialChangeBeer.getIngredients() != null ? partialChangeBeer.getIngredients() : beer.getIngredients());
+		beer.setAlcoholContent(partialChangeBeer.getAlcoholContent() != null ? partialChangeBeer.getAlcoholContent() : beer.getAlcoholContent());
+		beer.setPrice(partialChangeBeer.getPrice() > 0 ? partialChangeBeer.getPrice() : beer.getPrice());
+		beer.setCategory(partialChangeBeer.getCategory() != null ? partialChangeBeer.getCategory() : beer.getCategory());
+		
+		return beerRepository.save(beer);
+	}
+	
 	public void deleteBeer(Long id) {
 		beerRepository.deleteById(id);
 	}
+
 
 }

@@ -2,8 +2,6 @@
 
 O objetivo deste projeto é avaliar o desenvolvimento de uma aplicação java utilizando Spring e APIs.
 
-### Baseado no [Building an Application with Spring Boot](https://spring.io/guides/gs/spring-boot/).
-
 ## Especificação do projeto
 
 A beer house é uma empresa possui um catálogo de cervejas artesanais. Esta empresa está buscando entrar no mundo digital.
@@ -18,7 +16,18 @@ Para implementar estas APIs você dever seguir a especificação do swagger que 
     |docs
     |    |___swagger-craftbeer
 
-## Links de sugestão:
+## Set up environment
 
-### [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/).
-### [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/).
+O banco de dados utilizado para persistência dos dados das cervejas artesanais foi o H2 Database, podendo ser acessado pela URL abaixo utilizando as propriedades de conexão que estão no arquivo application.properties.
+
+```bash
+     http://localhost:8080/h2-console
+```
+
+A coleção do Postman para testar os recursos estão disponíveis na URL abaixo:
+
+```bash
+     https://www.getpostman.com/collections/e0ea3a378249006900f3
+```
+
+

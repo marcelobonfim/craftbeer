@@ -132,6 +132,10 @@ public class BeerControllerTest {
 	
 	@Test
 	public void shouldReturnSuccess_WhenChangeBeer() {
+		
+		beer.setName("Cauim");
+		beer.setIngredients("Trigo");
+		beer.setCategory("Pilsen");
 
 		when(this.beerService.changeBeer(1L, beer))
 			.thenReturn(beer);
@@ -148,6 +152,10 @@ public class BeerControllerTest {
 	@Test
 	public void shouldReturnNotFound_WhenChangeBeer() {
 		
+		beer.setName("Cauim");
+		beer.setIngredients("Trigo");
+		beer.setCategory("Pilsen");
+		
 		when(this.beerService.changeBeer(1L, beer))
 			.thenReturn(null);
 		
@@ -162,8 +170,10 @@ public class BeerControllerTest {
 	
 	@Test
 	public void shouldReturnSuccess_WhenPartialChangeBeer() {
+		
+		beer.setPrice(11);
 
-		when(this.beerService.changeBeer(1L, beer))
+		when(this.beerService.partialChangeBeer(1L, beer))
 			.thenReturn(beer);
 		
 		given()
@@ -178,7 +188,9 @@ public class BeerControllerTest {
 	@Test
 	public void shouldReturnNotFound_WhenPartialChangeBeer() {
 		
-		when(this.beerService.changeBeer(1L, beer))
+		beer.setPrice(11);
+		
+		when(this.beerService.partialChangeBeer(1L, beer))
 			.thenReturn(null);
 		
 		given()

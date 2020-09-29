@@ -3,6 +3,8 @@ package com.beerhouse.controller;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,7 +39,7 @@ public class BeerController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Beer> addBeer(@RequestBody Beer beer) throws Exception {
+	public ResponseEntity<Beer> addBeer(@Valid @RequestBody Beer beer) throws Exception {
 		Beer beerNew = beerService.addBeer(beer);
 		
 		if (beerNew == null) {
@@ -63,7 +65,7 @@ public class BeerController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Beer> putBeer(@PathVariable Long id, @RequestBody Beer beer) {
+	public ResponseEntity<Beer> putBeer(@PathVariable Long id, @Valid @RequestBody Beer beer) {
 		
 		Beer changeBeer = beerService.changeBeer(id, beer);
 		
@@ -75,9 +77,9 @@ public class BeerController {
 	}
 	
 	@PatchMapping("/{id}")
-	public ResponseEntity<Beer> patchBeer(@PathVariable Long id, @RequestBody Beer beer) {
+	public ResponseEntity<Beer> patchBeer(@PathVariable Long id, @Valid @RequestBody Beer beer) {
 		
-		Beer changeBeer = beerService.changeBeer(id, beer);
+		Beer changeBeer = beerService.partialChangeBeer(id, beer);
 		
 		if (changeBeer == null) {
 			return ResponseEntity.notFound().build();
