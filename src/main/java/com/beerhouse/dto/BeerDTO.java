@@ -1,27 +1,35 @@
-package com.beerhouse.domain;
+package com.beerhouse.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.data.annotation.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Beer {
+public class BeerDTO {
 	
 	@Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+	@NotNull
 	private long id;
+	
+	@NotNull
 	private String name;
+	
+	@NotNull
 	private String ingredients;
+	
+	@NotNull
 	private String alcoholContent;
+	
+	@NotNull
 	private double price;
+	
+	@NotNull
 	private String category;
 
 }

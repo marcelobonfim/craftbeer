@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.beerhouse.domain.Beer;
+import com.beerhouse.dto.BeerDTO;
 import com.beerhouse.service.BeerService;
 
 @RestController
@@ -28,70 +29,93 @@ public class BeerController {
 	private BeerService beerService;
 	
 	@GetMapping
-	public ResponseEntity<List<Beer>> allBeers() {
-		List<Beer> beers = beerService.getBeers();
-		
-		if (beers == null) {
-			return ResponseEntity.notFound().build();
+	public ResponseEntity<List<BeerDTO>> allBeers() {
+		try {
+			List<BeerDTO> beers = beerService.getBeers();
+			
+			if (beers == null) {
+				return ResponseEntity.notFound().build();
+			}
+			
+			return ResponseEntity.ok(beers);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		return ResponseEntity.ok(beers);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Beer> addBeer(@Valid @RequestBody Beer beer) throws Exception {
-		Beer beerNew = beerService.addBeer(beer);
-		
-		if (beerNew == null) {
-			return ResponseEntity.notFound().build();
+	public ResponseEntity<BeerDTO> addBeer(@Valid @RequestBody BeerDTO beerDTO) throws Exception {
+		try {
+			BeerDTO beerNew = beerService.addBeer(beerDTO);
+			
+			if (beerNew == null) {
+				return ResponseEntity.notFound().build();
+			}
+			
+			return ResponseEntity.created(new URI("/beers/" + beerNew.getId())).body(beerNew);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		return ResponseEntity.created(new URI("/beers/" + beerNew.getId())).body(beerNew);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Beer> getBeer(@PathVariable Long id) {
-		if (id <= 0) {
-			return ResponseEntity.badRequest().build();
+	public ResponseEntity<BeerDTO> getBeer(@PathVariable Long id) {
+		try {
+			if (id <= 0) {
+				return ResponseEntity.badRequest().build();
+			}
+			
+			BeerDTO beerDTO = beerService.getBeer(id);
+			
+			if (beerDTO == null) {
+				return ResponseEntity.notFound().build();
+			}
+			
+			return ResponseEntity.ok(beerDTO);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		Beer beer = beerService.getBeer(id);
-		
-		if (beer == null) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		return ResponseEntity.ok(beer);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Beer> putBeer(@PathVariable Long id, @Valid @RequestBody Beer beer) {
-		
-		Beer changeBeer = beerService.changeBeer(id, beer);
-		
-		if (changeBeer == null) {
-			return ResponseEntity.notFound().build();
+	public ResponseEntity<BeerDTO> putBeer(@PathVariable Long id, @Valid @RequestBody BeerDTO beerDTO) {
+		try {
+			BeerDTO changeBeerDTO = beerService.changeBeer(id, beerDTO);
+			
+			if (changeBeerDTO == null) {
+				return ResponseEntity.notFound().build();
+			}
+			
+			return ResponseEntity.ok(changeBeerDTO);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return ResponseEntity.ok(changeBeer);
 	}
 	
 	@PatchMapping("/{id}")
-	public ResponseEntity<Beer> patchBeer(@PathVariable Long id, @Valid @RequestBody Beer beer) {
-		
-		Beer changeBeer = beerService.partialChangeBeer(id, beer);
-		
-		if (changeBeer == null) {
-			return ResponseEntity.notFound().build();
+	public ResponseEntity<BeerDTO> patchBeer(@PathVariable Long id, @RequestBody BeerDTO beerDTO) {
+		try {
+			BeerDTO changeBeerDTO = beerService.partialChangeBeer(id, beerDTO);
+			
+			if (changeBeerDTO == null) {
+				return ResponseEntity.notFound().build();
+			}
+			
+			return ResponseEntity.ok(changeBeerDTO);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		return ResponseEntity.ok(changeBeer);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteBeer(@PathVariable Long id) {
-		beerService.deleteBeer(id);
-		return ResponseEntity.noContent().build();
+		try {
+			beerService.deleteBeer(id);
+			return ResponseEntity.noContent().build();
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 }

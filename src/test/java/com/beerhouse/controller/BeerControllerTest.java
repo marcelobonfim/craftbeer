@@ -16,7 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 
-import com.beerhouse.domain.Beer;
+import com.beerhouse.dto.BeerDTO;
 import com.beerhouse.service.BeerService;
 
 import io.restassured.http.ContentType;
@@ -30,13 +30,13 @@ public class BeerControllerTest {
 	@MockBean
 	private BeerService beerService;
 	
-	private Beer beer;
+	private BeerDTO beer;
 	
 	@BeforeEach
 	public void setup() {
 		standaloneSetup(this.beerController);
 		
-		beer = new Beer(1L, "Appia", "Rapadura e Mel", "8%", 12, "Honey Wheat Ale");
+		beer = new BeerDTO(1L, "Appia", "Rapadura e Mel", "8%", 12, "Honey Wheat Ale");
 	}
 	
 	@Test
