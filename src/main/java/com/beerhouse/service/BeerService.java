@@ -73,5 +73,8 @@ public class BeerService {
 		beerRepository.deleteById(id);
 	}
 
+	public boolean existisBeer(Long id) {
+		return beerRepository.existsById(id);
+	}
 
 }

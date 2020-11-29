@@ -23,7 +23,7 @@ public class ApplicationTests {
 
 	@Test
 	public void whenConvertBeerDtoToBeertEntity_thenCorrect() {
-		BeerDTO beerDTO = new BeerDTO(1L, "Appia", "Rapadura e Mel", "8%", 12, "Honey Wheat Ale");
+		BeerDTO beerDTO = new BeerDTO(1L, "Appia", "Rapadura e Mel", "8%", 12.0, "Honey Wheat Ale");
 		
 		Beer beer = beerMapper.dtoToEntity(beerDTO);
 		

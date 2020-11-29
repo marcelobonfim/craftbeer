@@ -36,7 +36,7 @@ public class BeerControllerTest {
 	public void setup() {
 		standaloneSetup(this.beerController);
 		
-		beer = new BeerDTO(1L, "Appia", "Rapadura e Mel", "8%", 12, "Honey Wheat Ale");
+		beer = new BeerDTO(1L, "Appia", "Rapadura e Mel", "8%", 12.0, "Honey Wheat Ale");
 	}
 	
 	@Test
@@ -171,7 +171,7 @@ public class BeerControllerTest {
 	@Test
 	public void shouldReturnSuccess_WhenPartialChangeBeer() {
 		
-		beer.setPrice(11);
+		beer.setPrice(11.0);
 
 		when(this.beerService.partialChangeBeer(1L, beer))
 			.thenReturn(beer);
@@ -188,7 +188,7 @@ public class BeerControllerTest {
 	@Test
 	public void shouldReturnNotFound_WhenPartialChangeBeer() {
 		
-		beer.setPrice(11);
+		beer.setPrice(11.0);
 		
 		when(this.beerService.partialChangeBeer(1L, beer))
 			.thenReturn(null);
@@ -204,6 +204,9 @@ public class BeerControllerTest {
 	
 	@Test
 	public void shouldReturnSuccess_WhenDeleteBeer() {
+		when(this.beerService.existisBeer(1L))
+		.thenReturn(true);
+		
 		given()
 			.accept(ContentType.JSON)
 		.when()

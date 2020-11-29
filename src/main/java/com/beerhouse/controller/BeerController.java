@@ -111,6 +111,10 @@ public class BeerController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteBeer(@PathVariable Long id) {
 		try {
+			if (!beerService.existisBeer(id)) {
+				return ResponseEntity.notFound().build();
+			}
+			
 			beerService.deleteBeer(id);
 			return ResponseEntity.noContent().build();
 		} catch (Exception e) {

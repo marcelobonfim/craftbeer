@@ -1,5 +1,6 @@
 package com.beerhouse.dto;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
@@ -17,19 +18,19 @@ public class BeerDTO {
 	@NotNull
 	private long id;
 	
-	@NotNull
+	@NotBlank
 	private String name;
 	
-	@NotNull
+	@NotBlank
 	private String ingredients;
 	
-	@NotNull
+	@NotBlank
 	private String alcoholContent;
 	
 	@NotNull
-	private double price;
+	private Double price;
 	
-	@NotNull
+	@NotBlank
 	private String category;
 
 }
